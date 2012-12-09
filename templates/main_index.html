@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ title }} | gauden.appspot.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Gauden Galea">
+
+    <!-- Le styles -->
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- add custom styles for this site -->
+    <link href="/css/styles.css" rel="stylesheet">
+    <!-- and make the whole thing responsive -->
+    <link href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/bootstrap/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/bootstrap/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/bootstrap/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/bootstrap/ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">gauden</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">projects
+                <i class="icon-chevron-down icon-white"></i></a>
+                <ul class="dropdown-menu">
+                  {% for name in handler.APPS %}
+                  <li><a href="{{ handler.APPS[name].url }}">{{ handler.APPS[name].name }}</a></li>
+                  {% endfor %}
+                </ul>
+              </li> <!-- li dropdown -->
+            </ul>
+
+            <!-- LOGIN and USER PREFERENCES menu on the right -->
+            <ul class="nav pull-right">
+                <li class="dropdown">
+                  <a href="/" class="dropdown-toggle" data-toggle="dropdown">
+                    {% if handler.NICKNAME %}
+                      {{ handler.NICKNAME }}
+                    {% else %}
+                      <b class="icon-user icon-white"></b> 
+                    {% endif %}
+                    <i class="icon-chevron-down icon-white"></i>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>{{ handler.GREETING | safe }}</li>
+                  </ul>
+                </li> <!-- li dropdown -->
+            </ul> <!--/nav pull-right -->
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      <div class="container">
+        {% block hero_unit %}
+          <header class="hero-unit">
+            <h1>home</h1>
+            {% if frag %}<h2>{{ frag }}</h2>{% endif %}
+            <p>gauden&apos;s coding projects and web playground</p>
+          </header>
+        {% endblock hero_unit %}
+      </div> <!-- /container -->
+      <div class="push"><!--//--></div>
+    </div> <!-- /wrapper -->
+    <footer>
+      <div class="container">
+        <p>Gauden Galea (2012) <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons 3.0 Unported License</a></p>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- HTML5BoilerPlate for loading jQuery from Google CDN --> 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/bootstrap/js/jquery-1.7.1.min.js"><\/script>');</script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>

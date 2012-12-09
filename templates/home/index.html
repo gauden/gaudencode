@@ -1,0 +1,13 @@
+{# --------------------------------------------
+   Template for the HOME of the website
+   -------------------------------------------- #}
+
+{% extends "main_index.html" %}
+
+{% block hero_unit %}
+  <header class="hero-unit">
+    <h1>{{ app.name }}</h1>
+    <h2>{{ app.description }}</h2>
+    {% if frag %}<hr /><p>{{ frag }}</p>{% endif %}
+  </header>
+{% endblock hero_unit %}

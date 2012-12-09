@@ -1,0 +1,14 @@
+{# --------------------------------------------
+   Template for the NOTES app
+   -------------------------------------------- #}
+
+{% extends "main_index.html" %}
+
+
+{% block hero_unit %}
+  <header class="hero-unit">
+    <h1>notes</h1>
+    <p>store and edit random notes in reStructuredText</p>
+    {% if frag %}<h2>your input: {{ frag }}</h2>{% endif %}
+  </header>
+{% endblock hero_unit %}

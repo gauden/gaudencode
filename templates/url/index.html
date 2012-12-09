@@ -1,0 +1,14 @@
+{# --------------------------------------------
+   Template for the URL app
+   -------------------------------------------- #}
+
+{% extends "main_index.html" %}
+
+
+{% block hero_unit %}
+  <header class="hero-unit">
+    <h1>url</h1>
+    <p>store personal list of short URLs</p>
+    {% if frag %}<h2>your input: {{ frag }}</h2>{% endif %}
+  </header>
+{% endblock hero_unit %}
