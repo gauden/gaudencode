@@ -71,7 +71,12 @@ class NotesApp(Handler):
                    url='notes')
 
     def get(self, frag=''):
-        self.notes.NotesManager(self, frag)
+        manager = self.notes.NotesManager(self)
+        manager.render(frag)
+
+    def post(self, frag=''):
+        manager = self.notes.NotesManager(self)
+        manager.convert(self.request.get('content'))
 
 class MainPage(Handler):
     from sites.home import home

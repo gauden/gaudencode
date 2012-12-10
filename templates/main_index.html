@@ -46,7 +46,7 @@
                 <i class="icon-chevron-down icon-white"></i></a>
                 <ul class="dropdown-menu">
                   {% for name in handler.APPS %}
-                  <li><a href="{{ handler.APPS[name].url }}">{{ handler.APPS[name].name }}</a></li>
+                  <li><a href="/{{ handler.APPS[name].url }}">{{ handler.APPS[name].name }}</a></li>
                   {% endfor %}
                 </ul>
               </li> <!-- li dropdown -->
@@ -82,6 +82,13 @@
             <p>gauden&apos;s coding projects and web playground</p>
           </header>
         {% endblock hero_unit %}
+
+        {% block article %}
+        <article>
+          <h2>Default content</h2>
+          <p>This is what shows up when there is nothing to show.</p>
+        </article>  
+        {% endblock article %}
       </div> <!-- /container -->
       <div class="push"><!--//--></div>
     </div> <!-- /wrapper -->
