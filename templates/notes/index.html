@@ -47,9 +47,9 @@
     <article class="span6">
         {% if title %}
             <table class="table table-condensed">
-                <tr><th>Title:</th><td>{{ title }}</td></tr>
+                <tr><th style="width: 25%">Title:</th><td style="width: 75%">{{ title }}</td></tr>
                 <tr><th>Date created:</th><td>{{ date_created }}</td></tr>
-                <tr><th>By:</th><td>{{ author }}</td></tr>
+                <tr><th>By:</th><td>{{ handler.NICKNAME }}</td></tr>
             </table>
         {% endif %}
         {{ target | safe }}
