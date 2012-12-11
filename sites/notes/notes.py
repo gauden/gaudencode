@@ -8,11 +8,16 @@ class NotesManager(object):
     def __init__(self, handler):
         self.handler = handler
 
-    def convert(self, content=''):
-        html = markdown.markdown(content)
+    def convert(self):
+        title = self.handler.request.get('title')
+
+        source = self.handler.request.get('source')
+        target = markdown.markdown(source)
+
         self.handler.render('notes/index.html', 
-                       html = html, 
-                       content = content,
+                       title = title,
+                       source = source,
+                       target = target,
                        handler = self.handler)
 
     def render(self, frag=''):

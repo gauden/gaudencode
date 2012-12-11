@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"paddin",
+				"padding-left"
+			],
+			[
+				"backg",
+				"background-repeat"
+			],
+			[
+				"back",
+				"background-image"
+			],
+			[
 				"ga",
 				"gaemain	gaemain"
 			],
@@ -63,40 +75,39 @@
 			"file": "main.py",
 			"settings":
 			{
-				"buffer_size": 1048,
+				"buffer_size": 3285,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "sites/url/helper.py",
+			"file": "sites/notes/notes.py",
 			"settings":
 			{
-				"buffer_size": 50,
+				"buffer_size": 760,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "sites/url/url.py",
+			"file": "/Users/gauden/Desktop/Markdown-2.2.1/docs/reference.txt",
 			"settings":
 			{
-				"buffer_size": 78,
+				"buffer_size": 9794,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app.yaml",
+			"file": "templates/notes/index.html",
 			"settings":
 			{
-				"buffer_size": 408,
-				"line_ending": "Unix",
-				"name": "application: gauden"
+				"buffer_size": 1346,
+				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "gauden-osx.sublime-project",
+			"file": "templates/main_index.html",
 			"settings":
 			{
-				"buffer_size": 139,
+				"buffer_size": 4500,
 				"line_ending": "Unix"
 			}
 		}
@@ -104,9 +115,13 @@
 	"build_system": "Packages/Python/Python.sublime-build",
 	"command_palette":
 	{
-		"height": 87.0,
+		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"save",
+				"Project: Save As"
+			],
 			[
 				"ke us",
 				"Preferences: Key Bindings - User"
@@ -128,7 +143,7 @@
 				"Snippet: html"
 			]
 		],
-		"width": 392.0
+		"width": 575.0
 	},
 	"console":
 	{
@@ -145,8 +160,32 @@
 	},
 	"file_history":
 	[
-		"/Users/gauden/Dropbox/Workspace_GAE/gauden/sites/__init__.py",
+		"/Users/gauden/Library/Application Support/Sublime Text 2/Packages/User/jinif.sublime-snippet",
+		"/Users/gauden/Desktop/Markdown-2.2.1/docs/test_suite.txt",
+		"/Users/gauden/Dropbox/Workspace_GAE/ggasciichan/main.py",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/assets/css/styles.css",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/sites/home/home.py",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/sites/notes/notes.py",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/sites/url/url.py",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/templates/main_index.html",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/templates/home/index.html",
+		"/Users/gauden/Library/Application Support/Sublime Text 2/Packages/User/jinfor.sublime-snippet",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/templates/notes/index.html",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/templates/url/index.html",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/assets/bootstrap/css/bootstrap.css",
+		"/Users/gauden/Library/Application Support/Sublime Text 2/Packages/User/jinblock.sublime-snippet",
+		"/Users/gauden/Library/Application Support/Sublime Text 2/Packages/User/doctype.sublime-snippet",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/assets/bootstrap/js/bootstrap.js",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/templates/index.html",
 		"/Users/gauden/Dropbox/Workspace_GAE/gauden/app.yaml",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/templates/notes/notes_index.html",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/templates/index-old.html",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/lib/docutils/writers/__init__.py",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/lib/docutils_folder/tools/rst2html.py",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/sites/url/helper.py",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/lib/__init__.py",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/gauden-osx.sublime-project",
+		"/Users/gauden/Dropbox/Workspace_GAE/gauden/sites/__init__.py",
 		"/Users/gauden/Dropbox/Workspace_GAE/d3engine/treemaker-original.py",
 		"/Users/gauden/Dropbox/Workspace_GAE/d3engine/templates/chart-section.html",
 		"/Users/gauden/Dropbox/Workspace_GAE/d3engine/css/styles.css",
@@ -168,9 +207,7 @@
 		"/Users/gauden/Dropbox/Workspace_GAE/d3engine/treemaker.py",
 		"/Users/gauden/Dropbox/Workspace_GAE/d3engine/js/treemap.js",
 		"/Users/gauden/Dropbox/Workspace_GAE/d3engine/js/d3.v3.min.js",
-		"/Users/gauden/Dropbox/Workspace_GAE/ggasciichan/main.py",
 		"/Users/gauden/Dropbox/Workspace_GAE/d3engine/static/css/basic.css",
-		"/Users/gauden/Library/Application Support/Sublime Text 2/Packages/User/doctype.sublime-snippet",
 		"/Users/gauden/Dropbox/Workspace_GAE/ggasciichan/templates/front.html",
 		"/Users/gauden/Dropbox/Workspace_GAE/ggasciichan/app.yaml",
 		"/Users/gauden/Dropbox/Workspace_GAE/ggasciichan/templates/signup.html",
@@ -200,6 +237,33 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"content",
+			"handler",
+			"h1",
+			"MainApp",
+			"item",
+			"Project 1",
+			"register",
+			"MainPage",
+			"URL",
+			"nickname",
+			"NICKNAME",
+			"nickname",
+			"greeting",
+			"nav",
+			"gauden",
+			"hello",
+			"hero_unit",
+			"dropdown",
+			"Test",
+			"gg.png",
+			"'",
+			"');",
+			"jquery",
+			"boostrap",
+			"../assets",
+			"URLManager",
+			"caller",
 			"sublime",
 			"+",
 			";",
@@ -242,7 +306,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -250,41 +314,43 @@
 					"file": "main.py",
 					"settings":
 					{
-						"buffer_size": 1048,
+						"buffer_size": 3285,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								722,
-								722
+								2513,
+								2513
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.tmLanguage"
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 349.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "sites/url/helper.py",
+					"file": "sites/notes/notes.py",
 					"settings":
 					{
-						"buffer_size": 50,
+						"buffer_size": 760,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								48,
-								48
+								432,
+								432
 							]
 						],
 						"settings":
@@ -299,23 +365,25 @@
 				},
 				{
 					"buffer": 2,
-					"file": "sites/url/url.py",
+					"file": "/Users/gauden/Desktop/Markdown-2.2.1/docs/reference.txt",
 					"settings":
 					{
-						"buffer_size": 78,
+						"buffer_size": 9794,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								78,
-								78
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -325,24 +393,23 @@
 				},
 				{
 					"buffer": 3,
-					"file": "app.yaml",
+					"file": "templates/notes/index.html",
 					"settings":
 					{
-						"buffer_size": 408,
+						"buffer_size": 1346,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								19,
-								19
+								1014,
+								1014
 							]
 						],
 						"settings":
 						{
-							"auto_name": "application: gauden",
-							"syntax": "Packages/YAML/YAML.tmLanguage"
+							"syntax": "Packages/HTML/HTML.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -352,26 +419,28 @@
 				},
 				{
 					"buffer": 4,
-					"file": "gauden-osx.sublime-project",
+					"file": "templates/main_index.html",
 					"settings":
 					{
-						"buffer_size": 139,
+						"buffer_size": 4500,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								127,
-								127
+								2131,
+								2131
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 236.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -385,7 +454,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 31.0
 	},
 	"layout":
 	{

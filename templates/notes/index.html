@@ -17,15 +17,25 @@
 {% block article %}
 <div class="row-fluid">
     <form method="post" action="/notes/convert" class="well span6">
-      <label>Markdown input:</label>
-      <div span="span9"><textarea name="content" 
-                    placeholder="Type something…"
+      <input type="text" name="title" 
+             class="input-block-level"
+             placeholder="Type title here. Plain text, no markdown."
+             {% if title %}value="{{ title }}"{% endif %}>
+      <textarea name="source" 
+                    placeholder="Type any markdown text."
                     class="input-block-level"
-                    rows="20">{{ content }}</textarea></div> 
-      <div><button type="submit" class="btn">convert</button></div>
+                    rows="20">{{ source }}</textarea>
+      <button type="submit" class="btn">convert</button>
     </form>
     <article class="span6">
-        {{ html | safe }}
+        {% if title %}
+            <table class="table table-condensed">
+                <tr><th>Title:</th><td>{{ title }}</td></tr>
+                <tr><th>Date created:</th><td>{{ date_created }}</td></tr>
+                <tr><th>By:</th><td>{{ author }}</td></tr>
+            </table>
+        {% endif %}
+        {{ target | safe }}
     </article>
 </div>  <!-- /row-fluid -->
 {% endblock article %}
