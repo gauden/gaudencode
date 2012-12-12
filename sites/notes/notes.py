@@ -2,8 +2,6 @@ import logging
 import markdown
 import datetime
 
-logging.info("notes.py module has been imported")
-
 class NotesManager(object):
     """docstring for NotesManager"""
     def __init__(self, handler):
@@ -53,11 +51,13 @@ class NotesManager(object):
                        date_created = date_created,
                        errors = errors,
                        warnings = warnings,
+                       banner = False,
                        handler = self.handler)
 
     def render(self, frag=''):
         self.handler.render('notes/index.html', 
                        frag = frag,
+                       banner = True,
                        handler = self.handler
                        )
     

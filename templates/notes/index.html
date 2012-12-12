@@ -6,10 +6,12 @@
 
 
 {% block hero_unit %}
+  {% if banner %}
   <header class="hero-unit">
     <h1>notes</h1>
     <p>store and edit random notes in Markdown formatted text</p>
   </header>
+  {% endif %}
 {% endblock hero_unit %}
 
 
