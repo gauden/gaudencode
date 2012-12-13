@@ -2,6 +2,20 @@ import logging
 import markdown
 import datetime
 
+from google.appengine.ext import ndb
+
+class Note(ndb.Model):
+    """Models user notes"""
+    title = ndb.StringProperty(required=True)    
+    note = ndb.TextProperty()
+    date_created = ndb.DateTimeProperty(auto_now_add=True)
+    date_modified = ndb.DateTimeProperty(auto_now_add=True)
+    author = ndb.UserProperty(required=True)
+
+    @classmethod
+    def query_notebook(cls, ancestor_key):
+        return cls.query(ancestor=ancestor_key).order(-cls.date)
+
 class NotesManager(object):
     """docstring for NotesManager"""
     def __init__(self, handler):
@@ -12,6 +26,7 @@ class NotesManager(object):
 
         errors = []
         warnings = []
+
 
         # Check that title exists and convert to unicode if it does
         title = self.handler.request.get('title')
@@ -41,13 +56,20 @@ class NotesManager(object):
         if not self.handler.USER:
             warnings.append('Conversions cannot be saved unless you are signed in.')
 
-        now = datetime.datetime.now()
-        date_created = now.strftime("%Y-%m-%d %H:%M:%S")
+        note_key = self.handler.request.get('note_key')
+        if title and source and self.handler.USER:
+            note = self.save_note(title, source, note_key)
+            note_key = note.key.urlsafe()
+            date_created = note.date_created
+        else:
+            note_key = ''
+            date_created = datetime.datetime.now()
 
         self.handler.render('notes/index.html', 
                        title = title,
                        source = source,
                        target = target,
+                       note_key = note_key,
                        date_created = date_created,
                        errors = errors,
                        warnings = warnings,
@@ -60,6 +82,25 @@ class NotesManager(object):
                        banner = True,
                        handler = self.handler
                        )
+
+    def save_note(self, title, note, note_key=''):
+        # TODO -- a lot of error and security checking: 
+        # 1. is the current USER the owner of the note in question?
+        try:
+            note_key = ndb.Key(urlsafe=note_key)
+        except TypeError:
+            note_key = ''
+        if note_key:
+            note = note_key.get()
+        else:
+            note = Note()
+
+        note.title = str(title)
+        note.note = str(note)
+        note.author = self.handler.USER
+        note_key = note.put()
+
+        return note
     
     def _to_unicode_or_bust(self, obj, encoding='utf-8'):
         '''From "Unicode in Python, Completely Demystified" 
