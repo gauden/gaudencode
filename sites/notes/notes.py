@@ -7,7 +7,7 @@ from google.appengine.ext import ndb
 class Note(ndb.Model):
     """Models user notes"""
     title = ndb.StringProperty(required=True)    
-    note = ndb.TextProperty()
+    source = ndb.TextProperty()
     date_created = ndb.DateTimeProperty(auto_now_add=True)
     date_modified = ndb.DateTimeProperty(auto_now_add=True)
     author = ndb.UserProperty(required=True)
@@ -83,7 +83,7 @@ class NotesManager(object):
                        handler = self.handler
                        )
 
-    def save_note(self, title, note, note_key=''):
+    def save_note(self, title, source, note_key=''):
         # TODO -- a lot of error and security checking: 
         # 1. is the current USER the owner of the note in question?
         try:
@@ -96,7 +96,7 @@ class NotesManager(object):
             note = Note()
 
         note.title = str(title)
-        note.note = str(note)
+        note.source = str(source)
         note.author = self.handler.USER
         note_key = note.put()
 
