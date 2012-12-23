@@ -1,0 +1,41 @@
+{# --------------------------------------------
+   HOME Template for the NOTES app
+   -------------------------------------------- #}
+
+{% extends "/notes/notes_layout.html" %}
+
+{% block section_menu %}
+  <!-- START SECTION MENU -->
+  <ul class="nav">
+    <li><a href="/notes">notes</a></li>
+    <li><a href="/notes/about">about</a></li>
+  </ul>
+  
+  <!-- END SECTION MENU -->
+{% endblock section_menu %}
+
+
+
+
+{% block contents %}
+
+  {% if recent %}
+    <div class="dl-horizontal">
+      <dl>{% for key, note in recent.iteritems() %}
+          <dt>{{ note.title }}</dt>
+          <dd><a href="/notes/view/{{ key }}">View</a> |
+              {% if note.editable %}<a href="/notes/edit/{{ key }}">Edit</a>{% else %}Edit{% endif %}</dd>
+      {% endfor %}
+    </dl>
+    </div>
+  {% else %}
+    <div>
+      <ul>
+          <li>You have created no notes.
+              <a href="/notes/new/">Create a note.</a></li>
+      </ul>
+    </div>
+  {% endif %}
+
+{% endblock contents %}
+

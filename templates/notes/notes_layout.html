@@ -1,0 +1,38 @@
+{# --------------------------------------------
+   Template for the NOTES app
+   -------------------------------------------- #}
+
+{% extends "main_index.html" %}
+
+
+{% block body %}
+  <header class="well">
+    <h1>notes</h1>
+    <p>store and edit random notes in Markdown formatted text | <a href="/notes/"><i class="icon-home"></i> notes home</a> </p>
+  </header>
+
+  {% if errors %}
+    {% for error in errors %}
+      <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Error: </strong>{{ error }}
+      </div>
+    {% endfor %}
+  {% endif %}
+  
+  {% if warnings %}
+    {% for warning in warnings %}
+      <div class="alert alert-block">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Warning: </strong>{{ warning }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+{% block contents %}
+
+{% endblock contents %}
+
+
+{% endblock body %}
+

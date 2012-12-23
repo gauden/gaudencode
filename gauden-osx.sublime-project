@@ -2,8 +2,8 @@
 	"folders":
 	[
 		{
-			"path": "/Users/gauden/Dropbox/Workspace_GAE/gauden",
-            "file_exclude_patterns": ["*.sublime*", "__init__*"]
+			"path": "/Users/gauden/Dropbox/Workspace_GAE/gaudencode",
+            "file_exclude_patterns": ["*.sublime*", "__init__.*"]
 		}
 	]
 }

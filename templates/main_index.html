@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{{ title }} | gauden.appspot.com</title>
+    <title>{{ title }} | gaudencode.appspot.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Gauden Galea">
@@ -33,27 +33,13 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
           <a class="brand" href="/">gauden</a>
           <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">projects
-                <i class="icon-chevron-down icon-white"></i></a>
-                <ul class="dropdown-menu">
-                  {% for name in handler.APPS %}
-                  <li><a href="/{{ handler.APPS[name].url }}">{{ handler.APPS[name].name }}</a></li>
-                  {% endfor %}
-                </ul>
-              </li> <!-- li dropdown -->
-            </ul>
+
+            {% block section_menu %}{% endblock section_menu %}
 
             <!-- LOGIN and USER PREFERENCES menu on the right -->
-            <ul class="nav pull-right">
+            <ul class="dropdown nav pull-right">
                 <li class="dropdown">
                   <a href="/" class="dropdown-toggle" data-toggle="dropdown">
                     {% if handler.NICKNAME %}
@@ -68,6 +54,19 @@
                   </ul>
                 </li> <!-- li dropdown -->
             </ul> <!--/nav pull-right -->
+
+            <!-- APPS menu on the right -->
+            <ul class="dropdown nav pull-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">tools <i class="icon-chevron-down icon-white"></i></a>
+                <ul class="dropdown-menu">
+                  {% for name in handler.APPS %}
+                  <li><a href="/{{ handler.APPS[name].url }}">{{ handler.APPS[name].name }}</a></li>
+                  {% endfor %}
+                </ul>
+              </li> <!-- li dropdown -->
+            </ul>
+
           </div><!--/.nav-collapse -->
         </div>
       </div>
@@ -75,15 +74,7 @@
 
     <div class="wrapper">
       <div class="container">
-          {% block hero_unit %}
-          {% endblock hero_unit %}
-
-        {% block article %}
-        <article>
-          <h2>Default content</h2>
-          <p>This is what shows up when there is nothing to show.</p>
-        </article>  
-        {% endblock article %}
+        {% block body %}{% endblock body %}
       </div> <!-- /container -->
       <div class="push"><!--//--></div>
     </div> <!-- /wrapper -->

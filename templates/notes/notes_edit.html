@@ -1,0 +1,27 @@
+{# --------------------------------------------
+   EDITING Template for the NOTES app
+   -------------------------------------------- #}
+
+{% extends "/notes/notes_layout.html" %}
+
+
+{% block contents %}
+
+  <form method="post" action="/notes/save" class="well">
+    <input type="hidden" name="key" value="{{ key }}">
+    <input type="text" name="title" 
+           class="input-block-level"
+           placeholder="Type title here. Plain text, no markdown."
+           {% if title %}value="{{ title }}"{% endif %}>
+    <label class="checkbox">
+      <input type="checkbox" name="public_flag" value="public" {% if public_flag %}checked{% endif%}> Public 
+    </label>
+    <textarea name="source" style='font-family: monospace;'
+                  placeholder="Type any markdown text."
+                  class="input-block-level"
+                  rows="20">{{ source }}</textarea>
+    <button type="submit" class="btn">save</button>
+  </form>
+
+{% endblock contents %}
+

@@ -1,0 +1,27 @@
+{# --------------------------------------------
+   PAGE Template for the NOTES app
+   -------------------------------------------- #}
+
+{% extends "/notes/notes_layout.html" %}
+
+
+{% block contents %}
+
+  {% if not errors %}
+  <article>
+      {% if title %}
+          <table class="table table-condensed">
+              <tr><th style="width: 25%">Title:</th><td style="width: 75%">{{ title }}</td></tr>
+              <tr><th>Date created:</th><td>{{ date_created }}</td></tr>
+              <tr><th>Date modified:</th><td>{{ date_modified }}</td></tr>
+              <tr><th>By:</th><td>{{ handler.NICKNAME }}</td></tr>
+          </table>
+      {% endif %}
+      {{ target | safe }}
+      {% if editable %}<a href="/notes/edit/{{ key }}">Edit</a>{% endif %}
+  </article>
+  {% endif %}
+
+
+{% endblock contents %}
+

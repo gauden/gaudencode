@@ -4,10 +4,10 @@
 
 {% extends "main_index.html" %}
 
-{% block hero_unit %}
+{% block body %}
   <header class="hero-unit">
     <h1>{{ app.name }}</h1>
     <h2>{{ app.description }}</h2>
     {% if frag %}<hr /><p>{{ frag }}</p>{% endif %}
   </header>
-{% endblock hero_unit %}
+{% endblock body %}

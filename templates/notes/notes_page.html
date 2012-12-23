@@ -1,0 +1,19 @@
+{# --------------------------------------------
+   PAGE Template for the NOTES app
+   -------------------------------------------- #}
+
+{% extends "/notes/notes_layout.html" %}
+
+
+{% block contents %}
+
+  {% if not errors %}
+  <article>
+      <h1>{{ title }}</h1>
+      {{ target | safe }}
+  </article>
+  {% endif %}
+
+
+{% endblock contents %}
+
