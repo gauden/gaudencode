@@ -14,6 +14,7 @@
     <link href="/css/styles.css" rel="stylesheet">
     <!-- and make the whole thing responsive -->
     <link href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -33,27 +34,16 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
           <a class="brand" href="/">gauden</a>
           <div class="nav-collapse collapse">
 
             {% block section_menu %}{% endblock section_menu %}
 
-            <!-- LOGIN and USER PREFERENCES menu on the right -->
-            <ul class="dropdown nav pull-right">
-                <li class="dropdown">
-                  <a href="/" class="dropdown-toggle" data-toggle="dropdown">
-                    {% if handler.NICKNAME %}
-                      {{ handler.NICKNAME }}
-                    {% else %}
-                      <b class="icon-user icon-white"></b> 
-                    {% endif %}
-                    <i class="icon-chevron-down icon-white"></i>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li>{{ handler.GREETING | safe }}</li>
-                  </ul>
-                </li> <!-- li dropdown -->
-            </ul> <!--/nav pull-right -->
 
             <!-- APPS menu on the right -->
             <ul class="dropdown nav pull-right">
@@ -66,6 +56,23 @@
                 </ul>
               </li> <!-- li dropdown -->
             </ul>
+
+            <!-- LOGIN and USER PREFERENCES menu on the right -->
+             <ul class="dropdown nav pull-right">
+                <li class="dropdown">
+                  <a href="/" class="dropdown-toggle" data-toggle="dropdown">
+                    {% if handler.NICKNAME %}
+                      {{ handler.NICKNAME }}
+                    {% else %}
+                      <b class="icon-user icon-white"></b> 
+                    {% endif %}
+                    <i class="icon-chevron-down icon-white"></i>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>{{ handler.GREETING | safe }}</li>
+                  </ul>
+                </li>
+            </ul>  <!-- End login dropdown -->
 
           </div><!--/.nav-collapse -->
         </div>
@@ -91,5 +98,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/bootstrap/js/jquery-1.7.1.min.js"><\/script>');</script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bootstrap-dropdown.js"></script>
+    <script src="assets/js/google-code-prettify/prettify.js"></script>
   </body>
 </html>

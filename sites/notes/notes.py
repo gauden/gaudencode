@@ -139,8 +139,8 @@ class NotesManager(object):
 
         '''
 
-        # This records whether the user clicked 
-        # the save or view button on edit form
+        # This records whihc button was clicked 
+        # on the edit form: the save or view button
         ACTION = self.HANDLER.request.get('save') or self.HANDLER.request.get('view')
 
         allow_saving = False
@@ -199,9 +199,6 @@ class NotesManager(object):
                 # TODO redirect to viewing the note and flash error message on view
                 # self.HANDLER.redirect('/notes/view/%s' % self.NOTE.key.urlsafe())
         else: # Grant guest level access
-            # if self.NOTE.public_flag == True:
-            #     allow_editing = True # Allow editing of a public note
-            # else:
             # Disallow editing of a private note
             self.ERRORS.append('Guests cannot view or edit a private note.')
         if allow_editing:
@@ -258,7 +255,7 @@ class NotesManager(object):
         source = self._to_unicode_or_bust(source)
         replacer = '<em class="alert">No raw HTML please.</em>'
         target = markdown.markdown(source, 
-                                   ['extra', 'toc'],
+                                   ['extra', 'toc', 'sane_lists', 'meta', 'nl2br'],
                                     safe_mode='replace',
                                     output_format = 'html5',
                                     html_replacement_text=replacer)

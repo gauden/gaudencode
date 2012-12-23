@@ -5,7 +5,6 @@ import webapp2
 import jinja2
 import logging
 
-from google.appengine.ext import db
 from google.appengine.api import users
 
 from collections import namedtuple
@@ -16,11 +15,6 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
 
 App = namedtuple('App', ['name', 'url', 'description'])
 
-# def get_request_url(request, *a, **kw):
-#     return '''<pre>%s</pre>
-#     <pre>%s</pre>
-#     <pre>%s</pre>''' % ( str(request), str(a), str(kw) )
-
 class Handler(webapp2.RequestHandler):
     """Generic request handler with templating utility methods"""
 
@@ -28,13 +22,13 @@ class Handler(webapp2.RequestHandler):
         super(Handler, self).__init__(request, response)
         self.USER = users.get_current_user()
         if self.USER:
-            self.GREETING = ("<a href=\"%s\">sign out</a>" % 
-                        users.create_logout_url(dest_url = self.request.url))
             self.NICKNAME = self.USER.nickname()
+            self.GREETING = ('<a href=\"%s\">sign out</a>' % 
+                             users.create_logout_url(dest_url = self.request.url) )
             self.ACCESS_LEVEL = 'user'
         else:
-            self.GREETING = ("<a href=\"%s\">Sign in or register</a>" %
-                        users.create_login_url(dest_url = self.request.url))
+            self.GREETING = ('<a href=\"%s\">Sign in or register</a>' %
+                             users.create_login_url(dest_url = self.request.url))
             self.NICKNAME = None
             self.ACCESS_LEVEL = 'guest'
         self.APPS = self._register_apps()
@@ -75,7 +69,6 @@ class UrlApp(Handler):
                    url='url')
 
     def get(self, frag=''):
-        # self.write( get_request_url(self.request, 'UrlApp', 'get'))
         self.url.URLManager(self, frag)
 
 class NotesApp(Handler):
@@ -86,12 +79,9 @@ class NotesApp(Handler):
                    url='notes')
 
     def get(self, cmd='', key=''):
-        # self.write( get_request_url(self.request, 'NotesApp', 'get', cmd, key))
         manager = self.notes.NotesManager(self, cmd=cmd, key=key)
 
     def post(self, cmd=''):
-    #     # self.write( get_request_url(self.request, 'NotesApp', 'post', a, kw))
-    #     logging.info('----------------------> Made it here!')
         manager = self.notes.NotesManager(self, cmd)
 
 class MainPage(Handler):
@@ -102,7 +92,6 @@ class MainPage(Handler):
                    url='home')
 
     def get(self, frag=''):
-        # self.write( get_request_url(self.request, 'MainPage'))
         self.home.HomeManager(self, frag=frag)
 
 app = webapp2.WSGIApplication([
@@ -111,8 +100,6 @@ app = webapp2.WSGIApplication([
 
         webapp2.Route(r'/notes/<cmd:.*>/<key:.*>', NotesApp),
         webapp2.Route(r'/notes/<cmd:.*>', NotesApp),
-        # (r'/notes/(new)', NotesApp),         # create new note
-        # (r'/notes/(save)', NotesApp),        # convert md to HTML
         (r'/notes/', NotesApp),              # show list
         (r'/notes', NotesApp),               # show list
 
