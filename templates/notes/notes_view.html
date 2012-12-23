@@ -7,6 +7,8 @@
 
 {% block contents %}
 
+  {% if editable %}<div class="nav"><a class="btn" href="/notes/edit/{{ key }}">Edit</a></div>{% endif %}
+
   {% if not errors %}
   <article>
       {% if title %}
@@ -18,8 +20,12 @@
           </table>
       {% endif %}
       {{ target | safe }}
-      {% if editable %}<a href="/notes/edit/{{ key }}">Edit</a>{% endif %}
   </article>
+
+  <hr>
+
+  {% if editable %}<div class="nav"><a class="btn" href="/notes/edit/{{ key }}">Edit</a></div>{% endif %}
+
   {% endif %}
 
 

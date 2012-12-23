@@ -4,12 +4,18 @@
 
 {% extends "main_index.html" %}
 
+{% block section_menu %}
+  <!-- START SECTION MENU -->
+  <ul class="nav">
+    <li><a href="/notes">notes</a></li>
+    <li><a href="/notes/about">about</a></li>
+  </ul>
+  
+  <!-- END SECTION MENU -->
+{% endblock section_menu %}
+
 
 {% block body %}
-  <header class="well">
-    <h1>notes</h1>
-    <p>store and edit random notes in Markdown formatted text | <a href="/notes/"><i class="icon-home"></i> notes home</a> </p>
-  </header>
 
   {% if errors %}
     {% for error in errors %}

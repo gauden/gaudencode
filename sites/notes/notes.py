@@ -139,6 +139,10 @@ class NotesManager(object):
 
         '''
 
+        # This records whether the user clicked 
+        # the save or view button on edit form
+        ACTION = self.HANDLER.request.get('save') or self.HANDLER.request.get('view')
+
         allow_saving = False
 
         # retrieve variables from form 
@@ -167,7 +171,13 @@ class NotesManager(object):
                 self.ERRORS.append('You can edit a copy of this note if you log in.')
         if allow_saving:
             self.NOTE = self._save_note(title, source, public_flag, key)
-            self.HANDLER.redirect('/notes/edit/%s' % self.NOTE.key.urlsafe())
+            if ACTION == 'save':
+                next_page = 'edit'
+            else:
+                next_page = 'view'
+            self.HANDLER.redirect('/notes/%s/%s' % (next_page,
+                                                    self.NOTE.key.urlsafe())
+                                 )
         else:
             self.HANDLER.redirect('/notes/new')
 
