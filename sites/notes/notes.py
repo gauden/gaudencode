@@ -46,6 +46,9 @@ class NotesManager(object):
         if self.CMD == 'view':
             logging.info('----------------> view')
             self.render_view()
+        elif self.CMD == 'pubreader':
+            logging.info('----------------> pubreader')
+            self.render_pubreader()
         elif self.CMD == 'new':
             logging.info('----------------> new')
             self.render_new()
@@ -130,6 +133,35 @@ class NotesManager(object):
         else:
             self.WARNINGS.append('Login to copy public notes or to clone your own notes.')
             self._render( template = '/notes/notes_index.html' )
+
+    def render_pubreader(self):
+        '''Show the PubReader version of the current note'''
+        allow_viewing = False
+        if self.HANDLER.ACCESS_LEVEL == 'user':
+            if self.NOTE.owner == self.HANDLER.USER:
+                allow_viewing = True # Allow viewing of user's own notes
+            elif self.NOTE.public_flag == True:
+                allow_viewing = True # Allow viewing of public notes
+            else:
+                # Disallow viewing of someone else's private notes
+                self.ERRORS.append('You don\'t have access to that note.')
+        else: # Grant guest level access
+            if self.NOTE.public_flag == True:
+                allow_viewing = True # Allow viewing of a public note
+            else:
+                # Disallow editing of a private note
+                self.ERRORS.append('Guests cannot view or edit a private note.')
+        if allow_viewing:
+            display_fields = self._get_display_fields(note=self.NOTE)
+            target, error = self._markdown_to_html(self.NOTE.source)
+            display_fields['target'] = target
+            display_fields['editable'] = (self.NOTE.owner==self.HANDLER.USER 
+                                          and self.NOTE.owner != None)
+            if error: self.WARNINGS.append(error)
+        else:
+            display_fields = self._get_display_fields(note='')
+
+        self._render( template = 'notes/notes_pubreader.html', **display_fields )
 
     def render_view(self):
         '''Show the formatted version of the current note'''

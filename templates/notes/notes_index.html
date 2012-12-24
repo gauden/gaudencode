@@ -16,7 +16,7 @@
         <thead>
           <tr>
             <th class="span8">Title</th>
-            <th colspan="4" class="span4">
+            <th colspan="6" class="span4">
               Available Actions
             </th>
           </tr>
@@ -27,6 +27,9 @@
             <td class="ellipsis">{{ note.title }}</td>
             <td>
               <a href="/notes/view/{{ key }}"><i class="icon-eye-open"></i> View</a>
+            </td>
+            <td>
+              <a href="/notes/pubreader/{{ key }}"><i class="icon-book"></i> Reader</a>
             </td>
             <td>
               {% if handler.ACCESS_LEVEL == 'user' %}<a href="/notes/copy/{{ key }}"><i class="icon-plus"></i> Copy</a>{% endif %}

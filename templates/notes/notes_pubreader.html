@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><script type="text/javascript" src="/pubreader/js/jr.boots.js"></script>
+    	<title>{{ title }} | gaudencode.appspot.com</title>
+      <meta charset="utf-8" />
+      <meta name="apple-mobile-web-app-capable" content="no" />
+      <meta name="viewport" content="initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+      <link href="http://fonts.googleapis.com/css?family=Archivo+Narrow:400,700,400italic,700italic&amp;subset=latin" rel="stylesheet" type="text/css" />
+      <link rel="stylesheet" href="/pubreader/lib/css/normalize.css" />
+      <link rel="stylesheet" href="/pubreader/lib/css/figpopup.css" />
+      <link rel="stylesheet" href="/pubreader/css/jr.ui.css" />
+      <link rel="stylesheet" href="/pubreader/css/jr.pagemanager.css" />
+      <link rel="stylesheet" href="/pubreader/css/jr.pageturnsensor.css" />
+      <link rel="stylesheet" href="/pubreader/css/jr.pageprogressbar.css" />
+      <link rel="stylesheet" href="/pubreader/css/jr.objectbox.css" />
+      <link rel="stylesheet" href="/pubreader/css/jr.panel.css" />
+      <link rel="stylesheet" href="/pubreader/css/jr.panel.typo.css" />
+      <link rel="stylesheet" href="/pubreader/css/jr.panel.cmap.css" />
+      <link rel="stylesheet" href="/pubreader/css/jr.panel.istrip.css" />
+      <link rel="stylesheet" href="/pubreader/css/jr.content.css" />
+  </head>
+
+  <body>
+      <div id="jr" data-jr-path="/pubreader/">
+         <div class="jr-unsupported">
+            <table class="modal">
+               <tr>
+                  <td><span class="attn inline-block"></span><br />Your browser does not support the NLM
+                     PubReader view.<br />Go to <a href="http://www.ncbi.nlm.nih.gov/pmc/about/pr-browsers/">this page</a> to see a list of supporting browsers.
+                  </td>
+               </tr>
+            </table>
+         </div>
+         <div id="jr-ui" class="hidden">
+            <nav id="jr-head">
+               <div class="flexh tb">
+                  <div id="jr-tb1">
+                  	<a id="jr-pmc-sw" href="/notes/" class="btn link wsprkl" title="gaudencode Notes App home page">Home</a>
+                  </div>
+                  <div class="jr-rhead f1">
+                     <div class="t">{{ title }}</div>
+                     <div class="j">served by <a href="/notes/">gaudencode.appspot.com Notes app</a></div>
+                  </div>
+                  <div id="jr-tb2"><a id="jr-help-sw" class="btn wsprkl hidden" title="Help with NLM PubReader" data-path="/pubreader/" data-href="/pubreader/img/help.xml">?</a><a id="jr-typo-sw" class="btn wsprkl hidden" title="Typography configuration">Aa</a><a id="jr-cmap-sw" class="btn wsprkl hidden" title="Article navigation">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                           <path d="M20,20h10v8H20V20zM36,20h44v8H36V20zM20,37.33h10v8H20V37.33zM36,37.33h44v8H36V37.33zM20,54.66h10v8H20V54.66zM36,54.66h44v8H36V54.66zM20,72h10v8 H20V72zM36,72h44v8H36V72z"></path>
+                        </svg></a></div>
+               </div>
+            </nav>
+            <nav id="jr-dash" class="noselect">
+               <div id="jr-pi" class="hidden"><a id="jr-pi-prev" class="hidden" title="Previous page">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M75,30 c-80,60 -80,0 0,60 c-30,-60 -30,0 0,-60"></path>
+                        <text x="20" y="28" textLength="60" style="font-size:25px">Prev</text>
+                     </svg></a><div class="pginfo"> Page <i class="jr-pg-pn">0</i> of <i class="jr-pg-lp">0</i></div><a id="jr-pi-next" class="hidden" title="Next page">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M25,30c80,60 80,0 0,60 c30,-60 30,0 0,-60"></path>
+                        <text x="20" y="28" textLength="60" style="font-size:25px">Next</text>
+                     </svg></a></div>
+               <div id="jr-is-tb"><a id="jr-is-sw" class="btn wsprkl hidden" title="Switch between Figures/Tables strip and Progress bar">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <rect x="10" y="40" width="20" height="20"></rect>
+                        <rect x="40" y="40" width="20" height="20"></rect>
+                        <rect x="70" y="40" width="20" height="20"></rect>
+                     </svg></a></div>
+               <nav id="jr-istrip" class="istrip hidden"><a id="jr-is-prev" href="#" class="hidden" title="Previous">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M80,40 60,65 80,90 70,90 50,65 70,40z M50,40 30,65 50,90 40,90 20,65 40,40z"></path>
+                        <text x="35" y="25" textLength="60" style="font-size:25px">Prev</text>
+                     </svg></a><a id="jr-is-next" href="#" class="hidden" title="Next">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M20,40 40,65 20,90 30,90 50,65 30,40z M50,40 70,65 50,90 60,90 80,65 60,40z"></path>
+                        <text x="15" y="25" textLength="60" style="font-size:25px">Next</text>
+                     </svg></a></nav>
+               <nav id="jr-progress"></nav>
+            </nav>
+            <aside id="jr-links-p" class="hidden flexv">
+               <div class="tb sk-htbar flexh">
+                  <div><a class="jr-p-close btn wsprkl">Done</a></div>
+                  <div class="title-text f1"> Links </div>
+               </div>
+               <div class="cnt lol f1"></div>
+            </aside>
+            <aside id="jr-alt-p" class="hidden flexv">
+               <div class="tb sk-htbar flexh">
+                  <div><a class="jr-p-close btn wsprkl">Done</a></div>
+                  <div class="title-text f1"> Alternative formats </div>
+               </div>
+               <div class="cnt lol f1"></div>
+            </aside>
+            <aside id="jr-cmap-p" class="hidden flexv">
+               <div class="tb sk-htbar flexh">
+                  <div><a class="jr-p-close btn wsprkl">Done</a></div>
+                  <div class="title-text f1">Article navigation </div>
+               </div>
+               <div class="cnt lol f1"></div>
+            </aside>
+            <aside id="jr-typo-p" class="hidden flexv">
+               <div class="tb sk-htbar flexh">
+                  <div><a class="jr-p-close btn wsprkl">Done</a></div>
+                  <div class="title-text f1">Typography configuration </div>
+               </div>
+               <div class="cnt typo f1">
+                  <div><a class="sf btn wsprkl">A-</a><a class="lf btn wsprkl">A+</a></div>
+                  <div><a class="bcol-auto btn wsprkl">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" preserveAspectRatio="none">
+                           <text x="10" y="70" style="font-size:60px;font-family: Trebuchet MS, ArialMT, Arial, sans-serif" textLength="180">AUTO</text>
+                        </svg></a><a class="bcol-1 btn wsprkl">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                           <path d="M15,25 85,25zM15,40 85,40zM15,55 85,55zM15,70 85,70z"></path>
+                        </svg></a><a class="bcol-2 btn wsprkl">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                           <path d="M5,25 45,25z M55,25 95,25zM5,40 45,40z M55,40 95,40zM5,55 45,55z M55,55 95,55zM5,70 45,70z M55,70 95,70z"></path>
+                        </svg></a></div>
+               </div>
+            </aside>
+            <aside id="jr-objectbox" class="thidden hidden">
+               <div class="jr-objectbox-close wsprkl">X </div>
+               <div class="jr-objectbox-inner cnt">
+                  <div class="jr-objectbox-drawer"></div>
+               </div>
+            </aside>
+            <nav id="jr-pm-left" class="hidden">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 1000" preserveAspectRatio="none">
+                  <text x="850" y="-20" transform="rotate(90)" textLength="150" font-size="23">Previous Page</text>
+               </svg>
+            </nav>
+            <nav id="jr-pm-right" class="hidden">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 1000" preserveAspectRatio="none">
+                  <text x="850" y="-70" transform="rotate(90)" textLength="150" font-size="23">Next
+                     Page
+                  </text>
+               </svg>
+            </nav>
+         </div>
+         
+
+<div id="jr-content">
+  <article  data-type="main">
+      {{ target | safe }}
+  </article>
+</div>
+    	
+<div id="jr-scripts">
+         <script type="text/javascript" src="/pubreader/lib/js/jquery-1.7.2.js"></script>
+         <script type="text/javascript" src="/pubreader/lib/js/modernizr.jr.js"></script>
+         <script type="text/javascript" src="/pubreader/lib/js/jquery.throttle.js"></script>
+         <script src="/pubreader/lib/js/rangeinput.js"></script>
+         <script src="/pubreader/lib/js/jquery.touchSwipe.js"></script>
+         <script src="/pubreader/lib/js/jquery.hoverIntent.js"></script>
+         <script src="/pubreader/lib/js/figpopup.js"></script>
+         <script src="/pubreader/js/jr.utils.js"></script>
+         <script src="/pubreader/js/jquery.jr.pagemanager.js"></script>
+         <script src="/pubreader/js/jquery.jr.paginationstatus.js"></script>
+         <script src="/pubreader/js/jquery.jr.pageturnsensor.js"></script>
+         <script src="/pubreader/js/jquery.jr.pageprogressbar.js"></script>
+         <script src="/pubreader/js/jquery.jr.links.js"></script>
+         <script src="/pubreader/js/jquery.jr.historykeeper.js"></script>
+         <script src="/pubreader/js/jquery.jr.objectbox.js"></script>
+         <script src="/pubreader/js/jquery.jr.switcher.js"></script>
+         <script src="/pubreader/js/jquery.jr.panel.js"></script>
+         <script src="/pubreader/js/jquery.jr.panel.typo.js"></script>
+         <script src="/pubreader/js/jquery.jr.panel.cmap.js"></script>
+         <script src="/pubreader/js/jquery.jr.panel.istrip.js"></script>
+         <script src="/pubreader/js/jats.reader.js"></script>
+         <script type="text/x-mathjax-config">  
+              MathJax.Hub.Config({ 
+                SVG: { 
+                  scale: 90, 
+                  linebreaks: {
+                    automatic: true, 
+                    width: "container" 
+                  } 
+                }, 
+                showProcessingMessages: false, 
+                messageStyle: "none"
+              }); 
+            </script>
+            <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+</div> <!-- end jr-scripts -->
+
+    </div>
+  </body>
+</html>

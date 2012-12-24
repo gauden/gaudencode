@@ -12,6 +12,9 @@ handlers:
 - url: /bootstrap/
   static_dir: assets/bootstrap
 
+- url: /pubreader/
+  static_dir: assets/pubreader
+
 - url: /css/
   static_dir: assets/css
 
