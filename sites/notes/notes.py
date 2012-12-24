@@ -41,6 +41,7 @@ class NotesManager(object):
         self.KEY, self.NOTE = self._validate_key(key)
         self.ERRORS = []
         self.WARNINGS = []
+        self.SUCCESSES = []
 
         if self.CMD == 'view':
             logging.info('----------------> view')
@@ -54,10 +55,12 @@ class NotesManager(object):
         elif self.CMD == 'save':
             logging.info('----------------> save')
             self.save_or_update_note()
-        elif self.CMD == 'delete':
-            pass
+        elif self.CMD == 'trash':
+            logging.info('----------------> trash')
+            self.trash_note()
         elif self.CMD == 'copy':
-            pass
+            logging.info('----------------> copy')
+            self.create_copy()
         elif self.CMD and key == '':
             logging.info('----------------> render page: %s' % self.CMD)
             self.render_page(url = self.CMD)
@@ -101,6 +104,33 @@ class NotesManager(object):
         '''Offer a blank form for editing a new Note'''
         self._render( template = 'notes/notes_edit.html' )
 
+    def create_copy(self):
+        '''Create a copy of the current note in the current user's notebook.'''
+        allow_copying = False
+        if not self.KEY:
+            self.ERRORS.append('No note to copy. We need a valid note ID.')
+
+        # allow copying if we are in a user session:
+        #     the logged in user is also the note owner
+        #     OR the note is public
+        if self.HANDLER.ACCESS_LEVEL == 'user':
+            allow_copying = ((self.NOTE.owner == self.HANDLER.USER) 
+                             or (self.NOTE.public_flag == True))
+
+        if allow_copying:
+            try:
+                new_note = self._clone_entity(self.NOTE)
+                new_note.title = '%s [COPY]' % new_note.title
+                new_note.owner = self.HANDLER.USER
+                new_key = new_note.put()
+                self.SUCCESSES.append('Made: %s' % new_note.title)
+                self.HANDLER.redirect('/notes/edit/%s' % new_key.urlsafe())
+            except:
+                self.ERRORS.append('Copy failed. Try again?')
+        else:
+            self.WARNINGS.append('Login to copy public notes or to clone your own notes.')
+            self._render( template = '/notes/notes_index.html' )
+
     def render_view(self):
         '''Show the formatted version of the current note'''
         allow_viewing = False
@@ -129,6 +159,36 @@ class NotesManager(object):
             display_fields = self._get_display_fields(note='')
 
         self._render( template = 'notes/notes_view.html', **display_fields )
+
+    def trash_note(self):
+        '''Trash the current note, if access is authorised.
+
+        - checks for access,
+        - deletes note (no checking for confirmation),
+        - then redirects home.
+
+        TODO ask for confirmation of deletion and return to the calling page
+        rather than redirecting home.
+
+        '''
+
+        allow_trashing = False
+
+        # determine access rights
+        if self.HANDLER.ACCESS_LEVEL == 'user':
+            if self.NOTE.owner == self.HANDLER.USER:
+                allow_trashing = True # Allow updating of user's own notes
+            else:
+                # Disallow deleting of someone else's notes
+                self.ERRORS.append('You can only delete your own notes.')
+        else: # Guests cannot delete notes
+            self.ERRORS.append('Guests cannot delete notes.')
+        if allow_trashing:
+            try:
+                self.KEY.delete()
+            except:
+                self.ERRORS.append('Deletion failed.')
+        self.HANDLER.redirect('/notes/')
 
     def save_or_update_note(self):
         '''Save or update the current note, if access is authorised.
@@ -213,6 +273,7 @@ class NotesManager(object):
                             handler = self.HANDLER,
                             errors = self.ERRORS,
                             warnings = self.WARNINGS,
+                            successes = self.SUCCESSES,
                             **display_fields
                             )
 
@@ -309,6 +370,27 @@ class NotesManager(object):
             if not isinstance(obj, unicode):
                 obj = unicode(obj, encoding)
         return obj
+
+    def _clone_entity(self, e, **extra_args):
+        """Clones an entity, adding or overriding constructor attributes.
+
+        The cloned entity will have exactly the same property values as the original
+        entity, except where overridden. By default it will have no parent entity or
+        key name, unless supplied. 
+        From: http://stackoverflow.com/a/2712401/1290420
+
+        Args:
+          e: The entity to clone
+          extra_args: Keyword arguments to override from the cloned entity and pass
+            to the constructor.
+        Returns:
+          A cloned, possibly modified, copy of entity e.
+
+        """
+        klass = e.__class__
+        props = dict((k, v.__get__(e, klass)) for k, v in klass._properties.iteritems())
+        props.update(extra_args)
+        return klass(**props)
 
     def _debug(self):
         title = self.HANDLER.request.get('title')

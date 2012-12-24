@@ -9,14 +9,41 @@
 
 {% block contents %}
 
+
   {% if recent %}
-    <div class="dl-horizontal">
-      <dl>{% for key, note in recent.iteritems() %}
-          <dt>{{ note.title }}</dt>
-          <dd><a href="/notes/view/{{ key }}">View</a> |
-              {% if note.editable %}<a href="/notes/edit/{{ key }}">Edit</a>{% else %}Edit{% endif %}</dd>
-      {% endfor %}
-    </dl>
+    <div>
+      <table class='table table-hover table-condensed'>
+        <thead>
+          <tr>
+            <th class="span8">Title</th>
+            <th colspan="4" class="span4">
+              Available Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for key, note in recent.iteritems() %}
+          <tr>
+            <td class="ellipsis">{{ note.title }}</td>
+            <td>
+              <a href="/notes/view/{{ key }}"><i class="icon-eye-open"></i> View</a>
+            </td>
+            <td>
+              {% if handler.ACCESS_LEVEL == 'user' %}<a href="/notes/copy/{{ key }}"><i class="icon-plus"></i> Copy</a>{% endif %}
+            </td>
+            <td>
+              <a href="/notes/download/{{ key }}"><i class="icon-download"></i> Download</a>
+            </td>
+            <td>
+              {% if note.editable %}<a href="/notes/edit/{{ key }}"><i class="icon-pencil"></i> Edit</a>{% endif %}
+            </td>
+            <td>
+              {% if note.editable %}<a href="/notes/trash/{{ key }}"><i class="icon-trash"></i> Trash</a>{% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
     </div>
   {% endif %}
 
