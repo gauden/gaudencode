@@ -10,7 +10,7 @@
   {% if editable %}<div class="nav"><a class="btn" href="/notes/edit/{{ key }}">Edit</a></div>{% endif %}
 
   {% if not errors %}
-  <article>
+  <article class="well" style="background-color: white;">
       {% if title %}
           <table class="table table-condensed">
               <tr><th style="width: 25%">Title:</th><td style="width: 75%">{{ title }}</td></tr>
@@ -21,8 +21,6 @@
       {% endif %}
       {{ target | safe }}
   </article>
-
-  <hr>
 
   {% if editable %}<div class="nav"><a class="btn" href="/notes/edit/{{ key }}">Edit</a></div>{% endif %}
 

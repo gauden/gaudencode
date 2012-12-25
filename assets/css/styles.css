@@ -1,4 +1,6 @@
-
+body {
+    background: url(/img/debut_light.png);
+}
 
 /* Adds sticky footer at bottom of page using
    martinbean's solution: https://gist.github.com/1855032 */

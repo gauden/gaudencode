@@ -11,7 +11,7 @@
 
 
   {% if recent %}
-    <div>
+<!--     <div>
       <table class='table table-hover table-condensed'>
         <thead>
           <tr>
@@ -47,7 +47,45 @@
         {% endfor %}
         </tbody>
     </table>
-    </div>
+    </div> -->
+
+<div class="row">
+    {% for key, note in recent.iteritems() %}
+<div class="span4" 
+     style="text-align:center;
+  float: left;">
+      <div style="margin: 5px 0 8px; 
+  height: 4.5em;
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align:left;
+  font-size: 1.2em;
+  background-color: white;
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  -webkit-box-shadow: 4px 4px 8px 0px #aaa;
+          box-shadow: 4px 4px 8px 0px #aaa;">
+<p style="text-align: right;">
+  <a href="/notes/view/{{ key }}"><i class="icon-eye-open"></i></a>
+  <a href="/notes/pubreader/{{ key }}"><i class="icon-book"></i></a>
+  {% if handler.ACCESS_LEVEL == 'user' %}<a href="/notes/copy/{{ key }}"><i class="icon-plus"></i></a>{% else %}<i class="icon-plus muted"></i>{% endif %}
+  <a href="/notes/download/{{ key }}"><i class="icon-download"></i></a>
+  {% if note.editable %}<a href="/notes/edit/{{ key }}"><i class="icon-pencil"></i></a>{% else %}<i class="icon-pencil muted"></i>{% endif %}
+  {% if note.editable %}<a href="/notes/trash/{{ key }}"><i class="icon-trash"></i></a>{% else %}<i class="icon-trash muted"></i>{% endif %}
+</p>
+
+        <p style="
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 2; /* number of lines to show */
+   -webkit-box-orient: vertical;">{{ note.title }}</p>
+      </div>
+
+      </div>
+    {% endfor %}
+</div>
   {% endif %}
 
 {% endblock contents %}

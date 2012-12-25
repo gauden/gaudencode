@@ -1,6 +1,7 @@
 import logging
 import markdown
 import datetime
+import re
 
 from google.appengine.ext import ndb
 
@@ -43,8 +44,8 @@ class NotesManager(object):
         self.WARNINGS = []
         self.SUCCESSES = []
 
-        if self.CMD == 'view':
-            logging.info('----------------> view')
+        if self.CMD == 'view' or self.CMD == 'page':
+            logging.info('----------------> %s' % self.CMD)
             self.render_view()
         elif self.CMD == 'pubreader':
             logging.info('----------------> pubreader')
@@ -64,9 +65,6 @@ class NotesManager(object):
         elif self.CMD == 'copy':
             logging.info('----------------> copy')
             self.create_copy()
-        elif self.CMD and key == '':
-            logging.info('----------------> render page: %s' % self.CMD)
-            self.render_page(url = self.CMD)
         else:
             self.render_home()
 
@@ -90,18 +88,6 @@ class NotesManager(object):
                                                   key=note.key.urlsafe())
         display_fields = dict( recent = results )
         self._render( template = 'notes/notes_index.html', **display_fields )
-
-    def render_page(self, url=''):
-        '''Render a note as a standalone page
-
-        Note must be public.
-        There must be a Page that refers to the Note.
-        @url refers to the stub that follows the notes root: /notes/<url>
-        @url must be unique across all pages on the site
-
-        '''
-        
-        self._render( template = 'notes/notes_page.html' )
 
     def render_new(self):
         '''Offer a blank form for editing a new Note'''
@@ -190,7 +176,13 @@ class NotesManager(object):
         else:
             display_fields = self._get_display_fields(note='')
 
-        self._render( template = 'notes/notes_view.html', **display_fields )
+        if self.CMD == 'view':
+            template = 'notes/notes_view.html'
+        else: # self.CMD == 'page'
+            display_fields['bare_page'] = True
+            template = 'notes/notes_page.html'
+
+        self._render( template = template, **display_fields )
 
     def trash_note(self):
         '''Trash the current note, if access is authorised.
@@ -356,7 +348,25 @@ class NotesManager(object):
             html_in_source = True
         else:
             html_in_source = False
+
+        target = self._extra_formatting(target)
+
         return target, html_in_source
+
+    def _extra_formatting(self, target):
+        '''Adds extra attributes and does secondary formatting to the target.
+
+        This is rudimentary at this stage as it simply uses regex brute force.
+        TODO: use proper DOM analysis to analyse and format.
+        TODO: give the user some control over the attributes to be selected.
+        TODO: allow alternatives to Markdown e.g. Slideous or DZ slides format.
+
+        '''
+
+        # Add class="table" attribute to bare <table> tag, 
+        # to get a prettier effect from Boostrap
+        target = re.sub(r'(<table)(>)', r'\1 class="table table-bordered table-hover"\2', target)
+        return target
 
     def _get_display_fields(self, target='', note=''):
         result = {}
@@ -428,7 +438,8 @@ class NotesManager(object):
         title = self.HANDLER.request.get('title')
         source = self.HANDLER.request.get('source')
         key = self.HANDLER.request.get('key')
-        self.KEY, self.NOTE = self._validate_key(key)
+        if key:
+            self.KEY, self.NOTE = self._validate_key(key)
         public_flag = self.HANDLER.request.get('public_flag')
         self.HANDLER.debug(dict(CMD = self.CMD,
                                 KEY = self.KEY.urlsafe(),

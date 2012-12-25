@@ -2,10 +2,10 @@
    PAGE Template for the NOTES app
    -------------------------------------------- #}
 
-{% extends "/notes/notes_layout.html" %}
+{% extends "main_index.html" %}
 
 
-{% block contents %}
+{% block body %}
 
   {% if not errors %}
   <article>
@@ -15,5 +15,5 @@
   {% endif %}
 
 
-{% endblock contents %}
+{% endblock body %}
 
