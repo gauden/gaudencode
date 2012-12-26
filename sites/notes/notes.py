@@ -44,7 +44,7 @@ class NotesManager(object):
         self.WARNINGS = []
         self.SUCCESSES = []
 
-        if self.CMD == 'view' or self.CMD == 'page':
+        if self.CMD == 'view' or self.CMD == 'page' or self.CMD == 'slides':
             logging.info('----------------> %s' % self.CMD)
             self.render_view()
         elif self.CMD == 'pubreader':
@@ -139,10 +139,13 @@ class NotesManager(object):
                 self.ERRORS.append('Guests cannot view or edit a private note.')
         if allow_viewing:
             display_fields = self._get_display_fields(note=self.NOTE)
-            target, error = self._markdown_to_html(self.NOTE.source)
+            target, error, meta = self._markdown_to_html(self.NOTE.source)
+
+            target = self._view_helper_purge_extra_markup(target)
             display_fields['target'] = target
             display_fields['editable'] = (self.NOTE.owner==self.HANDLER.USER 
                                           and self.NOTE.owner != None)
+            for k, v in meta.iteritems(): display_fields[k] = v[0]
             if error: self.WARNINGS.append(error)
         else:
             display_fields = self._get_display_fields(note='')
@@ -167,22 +170,44 @@ class NotesManager(object):
                 # Disallow editing of a private note
                 self.ERRORS.append('Guests cannot view or edit a private note.')
         if allow_viewing:
-            display_fields = self._get_display_fields(note=self.NOTE)
-            target, error = self._markdown_to_html(self.NOTE.source)
-            display_fields['target'] = target
-            display_fields['editable'] = (self.NOTE.owner==self.HANDLER.USER 
-                                          and self.NOTE.owner != None)
-            if error: self.WARNINGS.append(error)
+            display_fields, target, error = self._view_helper_markdown()
         else:
             display_fields = self._get_display_fields(note='')
 
+        display_fields['bare_page'] = True
         if self.CMD == 'view':
             template = 'notes/notes_view.html'
+            display_fields['bare_page'] = False
+        elif self.CMD == 'slides':
+            # separate the slides and put in temporary holder
+            divider = re.compile(r'<p>{{\s+slide.+}}</p>')
+            slides = [ slide for slide in divider.split(target) if slide.strip() ]
+
+            # for each slide separate the slide material from the handout
+            divider = re.compile(r'<p>{{\s+handout.+}}</p>')
+            display_fields['slides'] = [ divider.split(slide)  for slide in slides ]
+
+            template = 'notes/notes_s5.html'
         else: # self.CMD == 'page'
-            display_fields['bare_page'] = True
+            display_fields['target'] = self._view_helper_purge_extra_markup(display_fields['target'])
             template = 'notes/notes_page.html'
 
         self._render( template = template, **display_fields )
+
+    def _view_helper_markdown(self):
+        display_fields = self._get_display_fields(note=self.NOTE)
+        target, error, meta = self._markdown_to_html(self.NOTE.source)
+        display_fields['target'] = target
+        display_fields['editable'] = (self.NOTE.owner==self.HANDLER.USER 
+                                      and self.NOTE.owner != None)
+        for k, v in meta.iteritems(): display_fields[k] = v[0]
+        if error: self.WARNINGS.append(error)
+        return display_fields, target, error
+
+    def _view_helper_purge_extra_markup(self, target):
+        purge_pattern = re.compile(r'<p>{{\s+\w+.+}}</p>\n')
+        target = re.sub(purge_pattern, '', target)
+        return target
 
     def trash_note(self):
         '''Trash the current note, if access is authorised.
@@ -339,19 +364,20 @@ class NotesManager(object):
         '''
         source = self._to_unicode_or_bust(source)
         replacer = '<em class="alert">No raw HTML please.</em>'
-        target = markdown.markdown(source, 
-                                   ['extra', 'toc', 'sane_lists', 'meta', 'nl2br'],
-                                    safe_mode='replace',
-                                    output_format = 'html5',
-                                    html_replacement_text=replacer)
+        md = markdown.Markdown( extensions = ['extra', 'toc', 
+                                              'sane_lists', 'meta', 
+                                              'nl2br'],
+                                safe_mode='replace',
+                                output_format = 'html5',
+                                html_replacement_text=replacer)
+        target = md.convert(source)
         if replacer in target:
             html_in_source = True
         else:
             html_in_source = False
 
         target = self._extra_formatting(target)
-
-        return target, html_in_source
+        return target, html_in_source, md.Meta
 
     def _extra_formatting(self, target):
         '''Adds extra attributes and does secondary formatting to the target.
@@ -365,7 +391,7 @@ class NotesManager(object):
 
         # Add class="table" attribute to bare <table> tag, 
         # to get a prettier effect from Boostrap
-        target = re.sub(r'(<table)(>)', r'\1 class="table table-bordered table-hover"\2', target)
+        target = re.sub(r'(<table)(>)', r'\1 class="table table-bordered table-condensed table-hover"\2', target)
         return target
 
     def _get_display_fields(self, target='', note=''):

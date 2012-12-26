@@ -15,6 +15,9 @@ handlers:
 - url: /pubreader/
   static_dir: assets/pubreader
 
+- url: /s5/
+  static_dir: assets/slides/s5
+
 - url: /css/
   static_dir: assets/css
 

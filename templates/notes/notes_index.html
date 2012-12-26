@@ -8,85 +8,69 @@
 
 
 {% block contents %}
+    <div class="row">
+        <div class="span4" 
+              style="text-align:center; float: left;">
+            <div style="margin: 5px 0 8px; 
+                        font-size: 1.2em;
+                        height: 4.5em;
+                        text-align: left;
+                        padding: 10px;
+                        border: 1px dotted #999;
+                        -webkit-border-radius: 8px;
+                        -moz-border-radius: 8px;
+                        border-radius: 8px;">
+              <p style="padding-top: 0.25em;">
+                <a href="/notes/new/"><i class="icon-plus"></i> new note</a><br>
+                <a href="/notes/upload/"><i class="icon-upload"></i> upload text file</a></p>
+        </div>
 
+        </div>
 
   {% if recent %}
-<!--     <div>
-      <table class='table table-hover table-condensed'>
-        <thead>
-          <tr>
-            <th class="span8">Title</th>
-            <th colspan="6" class="span4">
-              Available Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-        {% for key, note in recent.iteritems() %}
-          <tr>
-            <td class="ellipsis">{{ note.title }}</td>
-            <td>
-              <a href="/notes/view/{{ key }}"><i class="icon-eye-open"></i> View</a>
-            </td>
-            <td>
-              <a href="/notes/pubreader/{{ key }}"><i class="icon-book"></i> Reader</a>
-            </td>
-            <td>
-              {% if handler.ACCESS_LEVEL == 'user' %}<a href="/notes/copy/{{ key }}"><i class="icon-plus"></i> Copy</a>{% endif %}
-            </td>
-            <td>
-              <a href="/notes/download/{{ key }}"><i class="icon-download"></i> Download</a>
-            </td>
-            <td>
-              {% if note.editable %}<a href="/notes/edit/{{ key }}"><i class="icon-pencil"></i> Edit</a>{% endif %}
-            </td>
-            <td>
-              {% if note.editable %}<a href="/notes/trash/{{ key }}"><i class="icon-trash"></i> Trash</a>{% endif %}
-            </td>
-          </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    </div> -->
+      {% for key, note in recent.iteritems() %}
+        <div class="span4" 
+              style="text-align:center; float: left;">
+        <div style="margin: 5px 0 8px; 
+                    height: 4.5em;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    text-align:left;
+                    font-size: 1.2em;
+                    background-color: white;
+                    -webkit-border-radius: 8px;
+                    -moz-border-radius: 8px;
+                    border-radius: 8px;
+                    -webkit-box-shadow: 4px 4px 8px 0px #aaa;
+                    box-shadow: 4px 4px 8px 0px #aaa;">
+          <p style="text-align: right;">
+            <a href="/notes/view/{{ key }}"><i class="icon-eye-open"></i></a>
 
-<div class="row">
-    {% for key, note in recent.iteritems() %}
-<div class="span4" 
-     style="text-align:center;
-  float: left;">
-      <div style="margin: 5px 0 8px; 
-  height: 4.5em;
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align:left;
-  font-size: 1.2em;
-  background-color: white;
-  -webkit-border-radius: 8px;
-     -moz-border-radius: 8px;
-          border-radius: 8px;
-  -webkit-box-shadow: 4px 4px 8px 0px #aaa;
-          box-shadow: 4px 4px 8px 0px #aaa;">
-<p style="text-align: right;">
-  <a href="/notes/view/{{ key }}"><i class="icon-eye-open"></i></a>
-  <a href="/notes/pubreader/{{ key }}"><i class="icon-book"></i></a>
-  {% if handler.ACCESS_LEVEL == 'user' %}<a href="/notes/copy/{{ key }}"><i class="icon-plus"></i></a>{% else %}<i class="icon-plus muted"></i>{% endif %}
-  <a href="/notes/download/{{ key }}"><i class="icon-download"></i></a>
-  {% if note.editable %}<a href="/notes/edit/{{ key }}"><i class="icon-pencil"></i></a>{% else %}<i class="icon-pencil muted"></i>{% endif %}
-  {% if note.editable %}<a href="/notes/trash/{{ key }}"><i class="icon-trash"></i></a>{% else %}<i class="icon-trash muted"></i>{% endif %}
-</p>
+            <a href="/notes/pubreader/{{ key }}"><i class="icon-book"></i></a>
 
-        <p style="
-   overflow: hidden;
-   text-overflow: ellipsis;
-   display: -webkit-box;
-   -webkit-line-clamp: 2; /* number of lines to show */
-   -webkit-box-orient: vertical;">{{ note.title }}</p>
-      </div>
+            <a href="/notes/slides/{{ key }}"><i class="icon-bullhorn"></i></a>
 
-      </div>
-    {% endfor %}
-</div>
+            {% if handler.ACCESS_LEVEL == 'user' %}<a href="/notes/copy/{{ key }}"><i class="icon-copy"></i></a>{% else %}<i class="icon-plus muted"></i>{% endif %}
+
+            <a href="/notes/download/{{ key }}"><i class="icon-download"></i></a>
+
+            {% if note.editable %}<a href="/notes/edit/{{ key }}"><i class="icon-pencil"></i></a>{% else %}<i class="icon-pencil muted"></i>{% endif %}
+
+            &nbsp; &nbsp; <!-- separator to diminish risk of click on trash -->
+
+            {% if note.editable %}<a href="/notes/trash/{{ key }}"><i class="icon-trash"></i></a>{% else %}<i class="icon-trash muted"></i>{% endif %}
+          </p>
+
+          <p style="overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2; /* number of lines to show */
+                    -webkit-box-orient: vertical;">{{ note.title }}</p>
+        </div>
+
+        </div>
+      {% endfor %}
   {% endif %}
-
+    </div>
 {% endblock contents %}
 
