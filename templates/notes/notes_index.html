@@ -8,6 +8,11 @@
 
 
 {% block contents %}
+
+
+
+
+
     <div class="row">
         <div class="span4" 
               style="text-align:center; float: left;">
@@ -22,7 +27,10 @@
                         border-radius: 8px;">
               <p style="padding-top: 0.25em;">
                 <a href="/notes/new/"><i class="icon-plus"></i> new note</a><br>
-                <a href="/notes/upload/"><i class="icon-upload"></i> upload text file</a></p>
+                <form method='POST' enctype='multipart/form-data' action="/notes/upload/">
+                  <input type="file" name="upload_file"> <input type="submit" value="upload">
+                </form>
+              </p>
         </div>
 
         </div>

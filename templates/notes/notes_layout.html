@@ -19,27 +19,27 @@
 
   {% if successes %}
     {% for success in successes %}
-      <div class="alert alert-success">
+      <div class="alert alert-success" style="font-size: 16pt;">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Success: </strong>{{ success }}
+        <strong><i class="icon-ok-circle"></i></strong> {{ success }}
       </div>
     {% endfor %}
   {% endif %}
 
   {% if errors %}
     {% for error in errors %}
-      <div class="alert alert-error">
+      <div class="alert alert-error" style="font-size: 16pt;">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Error: </strong>{{ error }}
+        <strong><i class="icon-warning-sign"></i></strong> {{ error }}
       </div>
     {% endfor %}
   {% endif %}
   
   {% if warnings %}
     {% for warning in warnings %}
-      <div class="alert alert-block">
+      <div class="alert alert-block" style="font-size: 16pt;">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Warning: </strong>{{ warning }}
+        <strong><i class="icon-info-sign"></i></strong> {{ warning }}
       </div>
     {% endfor %}
   {% endif %}

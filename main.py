@@ -81,7 +81,7 @@ class NotesApp(Handler):
     def get(self, cmd='', key=''):
         manager = self.notes.NotesManager(self, cmd=cmd, key=key)
 
-    def post(self, cmd=''):
+    def post(self, cmd='', key=''):
         manager = self.notes.NotesManager(self, cmd)
 
 class MainPage(Handler):
@@ -100,6 +100,7 @@ app = webapp2.WSGIApplication([
 
         webapp2.Route(r'/notes/<cmd:.*>/<key:.*>', NotesApp),
         webapp2.Route(r'/notes/<cmd:.*>', NotesApp),
+        webapp2.Route(r'/notes/<cmd:.*>/', NotesApp),
         (r'/notes/', NotesApp),              # show list
         (r'/notes', NotesApp),               # show list
 

@@ -2,6 +2,7 @@ import logging
 import markdown
 import datetime
 import re
+import StringIO
 
 from google.appengine.ext import ndb
 
@@ -56,6 +57,9 @@ class NotesManager(object):
         elif self.CMD == 'edit':
             logging.info('----------------> edit')
             self.render_edit()
+        elif self.CMD == 'upload':
+            logging.info('----------------> upload')
+            self.upload_file()
         elif self.CMD == 'save':
             logging.info('----------------> save')
             self.save_or_update_note()
@@ -67,6 +71,31 @@ class NotesManager(object):
             self.create_copy()
         else:
             self.render_home()
+
+    def upload_file(self):
+        upload = self.HANDLER.request.get('upload_file')
+        if upload:
+            logging.info('upload file found: %s' % upload)
+            VALID_UPLOAD = True
+            try:
+                upload = self._to_unicode_or_bust(upload)
+                filename = self.HANDLER.request.POST['upload_file'].filename 
+                self.SUCCESSES.append('Received file: %s' % filename)
+            except UnicodeDecodeError:
+                self.ERRORS.append('The upload is not a valid text file.')
+                VALID_UPLOAD = False
+
+            # TODO: check that upload is a valid text file
+            if VALID_UPLOAD:
+                display_fields = {}
+                title = StringIO.StringIO(upload).readline()
+                display_fields['title'] = title
+                display_fields['source'] = upload
+                self._render( template = '/notes/notes_edit.html', **display_fields )
+        else:
+            logging.info('no upload file found')
+            self.ERRORS.append('No file uploaded.')
+        self.render_home()
 
     def render_home(self):
         '''Landing page for Notes App'''
@@ -178,6 +207,7 @@ class NotesManager(object):
         if self.CMD == 'view':
             template = 'notes/notes_view.html'
             display_fields['bare_page'] = False
+            display_fields['target'] = self._view_helper_purge_extra_markup(display_fields['target'])
         elif self.CMD == 'slides':
             # separate the slides and put in temporary holder
             divider = re.compile(r'<p>{{\s+slide.+}}</p>')
@@ -372,9 +402,9 @@ class NotesManager(object):
                                 html_replacement_text=replacer)
         target = md.convert(source)
         if replacer in target:
-            html_in_source = True
+            html_in_source = 'No HTML tags are allowed in the text.'
         else:
-            html_in_source = False
+            html_in_source = ''
 
         target = self._extra_formatting(target)
         return target, html_in_source, md.Meta
