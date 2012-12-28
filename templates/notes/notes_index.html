@@ -17,7 +17,7 @@
 <div class="controls controls-row">
     <div>
       <a href="/notes/new/" class="btn"><i class="icon-plus"></i> new note</a>
-      <a href="#upload_form" role="button" class="btn" data-toggle="modal"><i class="icon-upload"></i> upload file</a>
+      <a id="upload-button" href="#upload_form" role="button" class="btn" data-toggle="modal" style="display: none;"><i class="icon-upload"></i> upload file</a>
 
       <div id="upload_form" class="modal hide fade in" style="display: none; ">  
         <div class="modal-header">  
@@ -61,7 +61,7 @@
 
             <a href="/notes/slides/{{ key }}"><i class="icon-bullhorn"></i></a>
 
-            {% if handler.ACCESS_LEVEL == 'user' %}<a href="/notes/copy/{{ key }}"><i class="icon-copy"></i></a>{% else %}<i class="icon-plus disabled"></i>{% endif %}
+            {% if handler.ACCESS_LEVEL == 'user' %}<a href="/notes/copy/{{ key }}"><i class="icon-copy"></i></a>{% else %}<i class="icon-copy disabled"></i>{% endif %}
 
             <a href="/notes/download/{{ key }}"><i class="icon-download"></i></a>
 
@@ -102,8 +102,14 @@
 
 {% block site_specific_bottom %}
 <script type="text/javascript">
+
 $('#upload_switch').click(function() {
   $('#upload_form').toggle();
 });
+
+// Hide the upload button on Apple tablets
+if ((navigator.userAgent.match(/iPad/i) == null) && (navigator.userAgent.match(/iPhone/i) == null) && (navigator.userAgent.match(/iPod/i) == null)) { 
+    document.getElementById("upload-button").style.display = "inline-block"; 
+}
 </script>
 {% endblock site_specific_bottom %}
