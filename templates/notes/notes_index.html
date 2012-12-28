@@ -9,6 +9,34 @@
   background-color: white;
   border: none;
 }
+
+.notelet_container {
+  margin: 5px 0 8px; 
+  height: 5em;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  text-align:left;
+  font-size: 1.2em;
+  background-color: white;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: 4px 4px 8px 0px #aaa;
+  box-shadow: 4px 4px 8px 0px #aaa;
+}
+
+.notelet_container a[href]:hover {
+  text-decoration: none;
+}
+
+.notelet_title {
+  margin-top: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
 </style>
 {% endblock site_specific_top %}
 
@@ -40,22 +68,13 @@
       {% for key, note in recent.iteritems() %}
         <div class="span4" 
               style="text-align:center; float: left;">
-        <div style="margin: 5px 0 8px; 
-                    height: 5em;
-                    padding: 10px 15px;
-                    border: 1px solid #ddd;
-                    text-align:left;
-                    font-size: 1.2em;
-                    background-color: white;
-                    -webkit-border-radius: 8px;
-                    -moz-border-radius: 8px;
-                    border-radius: 8px;
-                    -webkit-box-shadow: 4px 4px 8px 0px #aaa;
-                    box-shadow: 4px 4px 8px 0px #aaa;">
+        <div class="notelet_container" >
 
             {% if note.editable %}<a href="/notes/edit/{{ key }}"><i class="icon-pencil"></i></a>{% else %}<i class="icon-pencil disabled"></i>{% endif %}
 
             <a href="/notes/view/{{ key }}"><i class="icon-eye-open"></i></a>
+
+            <a href="/notes/page/{{ key }}"><i class="icon-file"></i></a>
 
             <a href="/notes/pubreader/{{ key }}"><i class="icon-book"></i></a>
 
@@ -64,8 +83,6 @@
             {% if handler.ACCESS_LEVEL == 'user' %}<a href="/notes/copy/{{ key }}"><i class="icon-copy"></i></a>{% else %}<i class="icon-copy disabled"></i>{% endif %}
 
             <a href="/notes/download/{{ key }}"><i class="icon-download"></i></a>
-
-            &nbsp; &nbsp;
 
             {% if note.editable %}<a href="#delete_form-{{ key }}" class="pull-right" role="button" data-toggle="modal"><i class="icon-trash"></i></a>{% else %}<i class="icon-trash disabled pull-right"></i>{% endif %}
 
@@ -84,15 +101,9 @@
                       <input class="btn btn-primary" type="submit" value="delete">
                 </form>
               </div>
-            </div>
-
-            <p style="margin-top: 10px;
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                      display: -webkit-box;
-                      -webkit-line-clamp: 2; /* number of lines to show */
-                      -webkit-box-orient: vertical;">{{ note.title }}</p>
-        </div>
+            </div> <!-- end delete-form -->
+            <p class="notelet_title">{{ note.title }}</p>
+        </div> <!-- end notelet_container -->
 
         </div>
       {% endfor %}

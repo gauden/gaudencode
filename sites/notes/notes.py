@@ -98,10 +98,6 @@ class NotesManager(object):
             else:
                 # Disallow download of a private note
                 self.ERRORS.append('Guests cannot download a private note.')
-        if allow_download:
-            display_fields, target, error = self._view_helper_markdown()
-        else:
-            display_fields = self._get_display_fields(note='')
 
         if allow_download:
             self.HANDLER.response.headers.add('Content-Length', len(self.NOTE.source))
@@ -130,7 +126,9 @@ class NotesManager(object):
             if VALID_UPLOAD:
                 display_fields = {}
                 title = StringIO.StringIO(upload).readline()
+                title = title.strip()
                 title = re.sub(r'^[^a-zA-Z0-9]*', '', title)
+                title = re.sub(r'[^a-zA-Z0-9_ ]', '_', title)
                 display_fields['title'] = title
                 display_fields['source'] = upload
                 self._render( template = '/notes/notes_edit.html', **display_fields )
