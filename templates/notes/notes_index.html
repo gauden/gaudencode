@@ -1,47 +1,48 @@
 {# --------------------------------------------
    HOME Template for the NOTES app
-   -------------------------------------------- #}
+   -------------------------------------------- 
+#}{% extends "/notes/notes_layout.html" %}
 
-{% extends "/notes/notes_layout.html" %}
-
-
+{% block site_specific_top %}
+<style type="text/css">
+.disabled {
+  background-color: white;
+  border: none;
+}
+</style>
+{% endblock site_specific_top %}
 
 
 {% block contents %}
+<div class="controls controls-row">
+    <div>
+      <a href="/notes/new/" class="btn"><i class="icon-plus"></i> new note</a>
+      <a href="#upload_form" role="button" class="btn" data-toggle="modal"><i class="icon-upload"></i> upload file</a>
 
+      <div id="upload_form" class="modal hide fade in" style="display: none; ">  
+        <div class="modal-header">  
+        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>  
+        <h3>Upload a file</h3>  
+        </div>  
+        <div class="modal-body">  
+        <form method='POST' enctype='multipart/form-data' action="/notes/upload/">
+              <input type="file" name="upload_file">
+              <input class="btn btn-success" type="submit" value="upload">
+            </form>              
+        </div> 
+      </div>
+      
+    </div>
+</div>
 
-
-
-
-    <div class="row">
-        <div class="span4" 
-              style="text-align:center; float: left;">
-            <div style="margin: 5px 0 8px; 
-                        font-size: 1.2em;
-                        height: 4.5em;
-                        text-align: left;
-                        padding: 10px;
-                        border: 1px dotted #999;
-                        -webkit-border-radius: 8px;
-                        -moz-border-radius: 8px;
-                        border-radius: 8px;">
-              <p style="padding-top: 0.25em;">
-                <a href="/notes/new/"><i class="icon-plus"></i> new note</a><br>
-                <form method='POST' enctype='multipart/form-data' action="/notes/upload/">
-                  <input type="file" name="upload_file"> <input type="submit" value="upload">
-                </form>
-              </p>
-        </div>
-
-        </div>
-
-  {% if recent %}
+<div class="row" style="margin-top: 20px">
+{% if recent %}
       {% for key, note in recent.iteritems() %}
         <div class="span4" 
               style="text-align:center; float: left;">
         <div style="margin: 5px 0 8px; 
-                    height: 4.5em;
-                    padding: 10px;
+                    height: 5em;
+                    padding: 10px 15px;
                     border: 1px solid #ddd;
                     text-align:left;
                     font-size: 1.2em;
@@ -51,25 +52,26 @@
                     border-radius: 8px;
                     -webkit-box-shadow: 4px 4px 8px 0px #aaa;
                     box-shadow: 4px 4px 8px 0px #aaa;">
-          <p style="text-align: right;">
-            <a href="/notes/view/{{ key }}"><i class="icon-eye-open"></i></a>
+            <div class="pull-right">{% if note.editable %}<form method="DELETE" action="/notes/trash/{{ key }}"><button type="submit"><i class="icon-trash"></i></button></form>{% else %}<i class="icon-trash  btn disabled"></i>{% endif %}</div>
+          <div class="btn-group">
 
-            <a href="/notes/pubreader/{{ key }}"><i class="icon-book"></i></a>
+            <a class="btn" href="/notes/view/{{ key }}"><i class="icon-eye-open"></i></a>
 
-            <a href="/notes/slides/{{ key }}"><i class="icon-bullhorn"></i></a>
+            <a class="btn" href="/notes/pubreader/{{ key }}"><i class="icon-book"></i></a>
 
-            {% if handler.ACCESS_LEVEL == 'user' %}<a href="/notes/copy/{{ key }}"><i class="icon-copy"></i></a>{% else %}<i class="icon-plus muted"></i>{% endif %}
+            <a class="btn" href="/notes/slides/{{ key }}"><i class="icon-bullhorn"></i></a>
 
-            <a href="/notes/download/{{ key }}"><i class="icon-download"></i></a>
+            {% if handler.ACCESS_LEVEL == 'user' %}<a class="btn" href="/notes/copy/{{ key }}"><i class="icon-copy"></i></a>{% else %}<i class="icon-plus  btn disabled"></i>{% endif %}
 
-            {% if note.editable %}<a href="/notes/edit/{{ key }}"><i class="icon-pencil"></i></a>{% else %}<i class="icon-pencil muted"></i>{% endif %}
+            <a class="btn" href="/notes/download/{{ key }}"><i class="icon-download"></i></a>
+
+            {% if note.editable %}<a class="btn" href="/notes/edit/{{ key }}"><i class="icon-pencil"></i></a>{% else %}<i class="icon-pencil btn disabled"></i>{% endif %}
 
             &nbsp; &nbsp; <!-- separator to diminish risk of click on trash -->
+          </div>
 
-            {% if note.editable %}<a href="/notes/trash/{{ key }}"><i class="icon-trash"></i></a>{% else %}<i class="icon-trash muted"></i>{% endif %}
-          </p>
-
-          <p style="overflow: hidden;
+          <p style="margin-top: 10px;
+                    overflow: hidden;
                     text-overflow: ellipsis;
                     display: -webkit-box;
                     -webkit-line-clamp: 2; /* number of lines to show */
@@ -78,7 +80,14 @@
 
         </div>
       {% endfor %}
-  {% endif %}
-    </div>
+{% endif %}
+</div>
 {% endblock contents %}
 
+{% block site_specific_bottom %}
+<script type="text/javascript">
+$('#upload_switch').click(function() {
+  $('#upload_form').toggle();
+});
+</script>
+{% endblock site_specific_bottom %}

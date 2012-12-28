@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import logging
 import markdown
 import datetime
@@ -40,7 +42,8 @@ class NotesManager(object):
     def __init__(self, handler, cmd='', key=''):
         self.HANDLER = handler
         self.CMD = cmd
-        self.KEY, self.NOTE = self._validate_key(key)
+        self.INPUT_KEY = key
+        self.KEY, self.NOTE = self._validate_key(self.INPUT_KEY)
         self.ERRORS = []
         self.WARNINGS = []
         self.SUCCESSES = []
@@ -89,6 +92,7 @@ class NotesManager(object):
             if VALID_UPLOAD:
                 display_fields = {}
                 title = StringIO.StringIO(upload).readline()
+                title = re.sub(r'^[^a-zA-Z0-9]*', '', title)
                 display_fields['title'] = title
                 display_fields['source'] = upload
                 self._render( template = '/notes/notes_edit.html', **display_fields )
@@ -254,20 +258,29 @@ class NotesManager(object):
         allow_trashing = False
 
         # determine access rights
-        if self.HANDLER.ACCESS_LEVEL == 'user':
-            if self.NOTE.owner == self.HANDLER.USER:
-                allow_trashing = True # Allow updating of user's own notes
+        if self.NOTE:
+            if self.HANDLER.ACCESS_LEVEL == 'user':
+                if self.NOTE.owner == self.HANDLER.USER:
+                    allow_trashing = True # Allow updating of user's own notes
+                else:
+                    # Disallow deleting of someone else's notes
+                    self.ERRORS.append('You can only delete your own notes.')
+            else: # Guests cannot delete notes
+                self.ERRORS.append('Guests cannot delete notes.')
+        else: # no valid note reference
+            if self.INPUT_KEY:
+                wrn = 'This note ID was not found: %s' % self.INPUT_KEY
             else:
-                # Disallow deleting of someone else's notes
-                self.ERRORS.append('You can only delete your own notes.')
-        else: # Guests cannot delete notes
-            self.ERRORS.append('Guests cannot delete notes.')
+                wrn = 'Deletion not possible.'
+            self.ERRORS.append(wrn)
         if allow_trashing:
             try:
+                title = self.NOTE.title
                 self.KEY.delete()
+                self.SUCCESSES.append('Deleted: %s' % title)
             except:
                 self.ERRORS.append('Deletion failed.')
-        self.HANDLER.redirect('/notes/')
+        self.render_home()
 
     def save_or_update_note(self):
         '''Save or update the current note, if access is authorised.
@@ -348,13 +361,23 @@ class NotesManager(object):
         self._render(template = 'notes/notes_edit.html', **display_fields)
 
     def _render(self, template, **display_fields):
-        self.HANDLER.render(template,
-                            handler = self.HANDLER,
-                            errors = self.ERRORS,
-                            warnings = self.WARNINGS,
-                            successes = self.SUCCESSES,
-                            **display_fields
-                            )
+        try:
+            self.HANDLER.render(template,
+                                handler = self.HANDLER,
+                                errors = self.ERRORS,
+                                warnings = self.WARNINGS,
+                                successes = self.SUCCESSES,
+                                **display_fields
+                                )
+        except:
+            self.ERRORS.append('Sorry, something went wrong there.')
+            self.HANDLER.render('/notes/',
+                                handler = self.HANDLER,
+                                errors = self.ERRORS,
+                                warnings = self.WARNINGS,
+                                successes = self.SUCCESSES,
+                                **display_fields
+                                )
 
     def _save_note(self, title, source, public_flag, key=''):
         '''Validate the input, update or create the note'''

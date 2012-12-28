@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{{ title }} | gaudencode.appspot.com</title>
+    <title>{% if title %}{{ title }}{% else %}home{%endif%} | gaudencode.appspot.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Gauden Galea">
@@ -32,6 +31,9 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/bootstrap/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/bootstrap/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="/bootstrap/ico/apple-touch-icon-57-precomposed.png">
+
+    {% block site_specific_top %}{% endblock site_specific_top %}
+
   </head>
 
   <body>
@@ -109,6 +111,9 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/bootstrap/js/jquery-1.7.1.min.js"><\/script>');</script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bootstrap-dropdown.js"></script>
+
+    {% block site_specific_bottom %}{% endblock site_specific_bottom %}
+
+
   </body>
 </html>
