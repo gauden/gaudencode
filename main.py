@@ -84,6 +84,10 @@ class NotesApp(Handler):
     def post(self, cmd='', key=''):
         manager = self.notes.NotesManager(self, cmd)
 
+    def delete(self, cmd=''):
+        key = self.request.get('key')
+        manager = self.notes.NotesManager(self, cmd, key)
+
 class MainPage(Handler):
     from sites.home import home
 

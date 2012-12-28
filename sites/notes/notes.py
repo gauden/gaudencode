@@ -66,13 +66,16 @@ class NotesManager(object):
         elif self.CMD == 'save':
             logging.info('----------------> save')
             self.save_or_update_note()
-        elif self.CMD == 'trash':
-            logging.info('----------------> trash')
+        elif self.CMD == 'delete':
+            logging.info('----------------> delete')
             self.trash_note()
         elif self.CMD == 'copy':
             logging.info('----------------> copy')
             self.create_copy()
         else:
+            logging.info('----------------------> CMD %s' % self.CMD)
+            logging.info('----------------> INPUT_KEY %s' % self.INPUT_KEY)
+            logging.info('----------------------> KEY %s' % self.KEY)
             self.render_home()
 
     def upload_file(self):

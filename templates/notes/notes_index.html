@@ -52,30 +52,46 @@
                     border-radius: 8px;
                     -webkit-box-shadow: 4px 4px 8px 0px #aaa;
                     box-shadow: 4px 4px 8px 0px #aaa;">
-            <div class="pull-right">{% if note.editable %}<form method="DELETE" action="/notes/trash/{{ key }}"><button type="submit"><i class="icon-trash"></i></button></form>{% else %}<i class="icon-trash  btn disabled"></i>{% endif %}</div>
-          <div class="btn-group">
 
-            <a class="btn" href="/notes/view/{{ key }}"><i class="icon-eye-open"></i></a>
+            {% if note.editable %}<a href="/notes/edit/{{ key }}"><i class="icon-pencil"></i></a>{% else %}<i class="icon-pencil disabled"></i>{% endif %}
 
-            <a class="btn" href="/notes/pubreader/{{ key }}"><i class="icon-book"></i></a>
+            <a href="/notes/view/{{ key }}"><i class="icon-eye-open"></i></a>
 
-            <a class="btn" href="/notes/slides/{{ key }}"><i class="icon-bullhorn"></i></a>
+            <a href="/notes/pubreader/{{ key }}"><i class="icon-book"></i></a>
 
-            {% if handler.ACCESS_LEVEL == 'user' %}<a class="btn" href="/notes/copy/{{ key }}"><i class="icon-copy"></i></a>{% else %}<i class="icon-plus  btn disabled"></i>{% endif %}
+            <a href="/notes/slides/{{ key }}"><i class="icon-bullhorn"></i></a>
 
-            <a class="btn" href="/notes/download/{{ key }}"><i class="icon-download"></i></a>
+            {% if handler.ACCESS_LEVEL == 'user' %}<a href="/notes/copy/{{ key }}"><i class="icon-copy"></i></a>{% else %}<i class="icon-plus disabled"></i>{% endif %}
 
-            {% if note.editable %}<a class="btn" href="/notes/edit/{{ key }}"><i class="icon-pencil"></i></a>{% else %}<i class="icon-pencil btn disabled"></i>{% endif %}
+            <a href="/notes/download/{{ key }}"><i class="icon-download"></i></a>
 
-            &nbsp; &nbsp; <!-- separator to diminish risk of click on trash -->
-          </div>
+            &nbsp; &nbsp;
 
-          <p style="margin-top: 10px;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 2; /* number of lines to show */
-                    -webkit-box-orient: vertical;">{{ note.title }}</p>
+            {% if note.editable %}<a href="#delete_form-{{ key }}" class="pull-right" role="button" data-toggle="modal"><i class="icon-trash"></i></a>{% else %}<i class="icon-trash disabled pull-right"></i>{% endif %}
+
+            <div id="delete_form-{{ key }}" class="modal hide fade in" style="display: none; ">  
+              <div class="modal-header">  
+                <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>  
+                <h3><i class="icon-warning-sign icon-large"></i> Delete a note</h3>  
+              </div>  
+              <div class="modal-body">  
+                <p>Are you sure you want to delete the note: <strong>"{{ note.title }}"</strong>?</p>
+                <p>This cannot be undone.</p>              
+              </div> 
+              <div class="modal-footer">
+                <form method='DELETE' action="/notes/delete/{{ note.key }}">
+                      <a href="#" class="btn"  data-dismiss="modal">close</a>
+                      <input class="btn btn-primary" type="submit" value="delete">
+                </form>
+              </div>
+            </div>
+
+            <p style="margin-top: 10px;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 2; /* number of lines to show */
+                      -webkit-box-orient: vertical;">{{ note.title }}</p>
         </div>
 
         </div>
