@@ -63,6 +63,9 @@ class NotesManager(object):
         elif self.CMD == 'upload':
             logging.info('----------------> upload')
             self.upload_file()
+        elif self.CMD == 'download':
+            logging.info('----------------> download')
+            self.download_file()
         elif self.CMD == 'save':
             logging.info('----------------> save')
             self.save_or_update_note()
@@ -76,6 +79,38 @@ class NotesManager(object):
             logging.info('----------------------> CMD %s' % self.CMD)
             logging.info('----------------> INPUT_KEY %s' % self.INPUT_KEY)
             logging.info('----------------------> KEY %s' % self.KEY)
+            self.render_home()
+
+    def download_file(self):
+        '''Download the source text from current note.'''
+        allow_download = False
+        if self.HANDLER.ACCESS_LEVEL == 'user':
+            if self.NOTE.owner == self.HANDLER.USER:
+                allow_download = True # Allow downloading of user's own notes
+            elif self.NOTE.public_flag == True:
+                allow_download = True # Allow downloading of public notes
+            else:
+                # Disallow downloading of someone else's private notes
+                self.ERRORS.append('You don\'t have access to that note.')
+        else: # Grant guest level access
+            if self.NOTE.public_flag == True:
+                allow_download = True # Allow downloading of a public note
+            else:
+                # Disallow download of a private note
+                self.ERRORS.append('Guests cannot download a private note.')
+        if allow_download:
+            display_fields, target, error = self._view_helper_markdown()
+        else:
+            display_fields = self._get_display_fields(note='')
+
+        if allow_download:
+            self.HANDLER.response.headers.add('Content-Length', len(self.NOTE.source))
+            self.HANDLER.response.headers.add('Content-Disposition', 
+                                              'filename=%s.md' % self.KEY.urlsafe())
+            self.HANDLER.response.headers.add('Content-Type', 'application/force-download; charset=utf-8')
+            self.HANDLER.response.headers.add('Accept-Ranges', 'bytes')
+            self.HANDLER.response.text = self.NOTE.source
+        else:
             self.render_home()
 
     def upload_file(self):
